@@ -8,6 +8,7 @@ token = '73eaea320bdc0d3299faa475c196cfea1c4df9da4c6d291633f9fe8f83c08c4de2a3abf
 friends_id_list = []
 friends_group_list = {}
 user_groups_list = {}
+user_id = input('Введите User ID: ')
 
 
 def printProgressBar (iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█'):
@@ -31,7 +32,7 @@ def printProgressBar (iteration, total, prefix='', suffix='', decimals=1, length
 
 class User:
 
-    def __int__(self, token):
+    def __init__(self):
         self.token = token
 
     def get_friends_params(self):
@@ -49,6 +50,15 @@ class User:
             'fields': 'members_count'
         }
 
+    def get_groups_params2(self):
+        return {
+            'user_id': user_id,
+            'v': '5.92',
+            'access_token': token,
+            'extended': '1',
+            'fields': 'members_count'
+        }
+
     def get_friends(self):
         params = self.get_friends_params()
 
@@ -59,7 +69,7 @@ class User:
         return response.json()
 
     def get_groups(self):
-        params = self.get_groups_params()
+        params = self.get_groups_params2()
 
         response = requests.get(
             'https://api.vk.com/method/groups.get',
